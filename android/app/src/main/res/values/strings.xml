@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">branches</string>
+    <string name="title_activity_main">branches</string>
+    <string name="package_name">com.branches.app</string>
+    <string name="custom_url_scheme">com.branches.app</string>
+</resources>
