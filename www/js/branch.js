@@ -126,7 +126,6 @@ function initialiseBranch(object, branchId) {
 
                     }
 
-
                     let branchOptionRequirements = '';
 
                     if (healthEffect != 0) {

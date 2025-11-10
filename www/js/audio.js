@@ -1,22 +1,3 @@
-function loadpage(id, url) {
-
-    $.ajax({
-        type: "GET",
-        url: url,
-        dataType: "html",
-        success: function (response) {
-            $('#' + id).html(response)
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.error("Error:", textStatus, errorThrown);
-        },
-        complete: function () {
-            console.log("Request complete.");
-        }
-    });
-
-}
-
 function playOpenModalSound() {
     var audio = document.getElementById('openModal');
     audio.currentTime = 0;
@@ -73,12 +54,5 @@ $(document).ready(function () {
     if (localStorage.getItem("gold") == null) {
         localStorage.setItem("gold", 100);
     }
-
-    $("#health").text(localStorage.getItem("health"));
-    $("#energy").text(localStorage.getItem("energy"));
-    $("#strength").text(localStorage.getItem("strength"));
-    $("#gold").text(localStorage.getItem("gold"));
-
+    
 });
-
-loadpage('main-content', 'html/branches.html')
