@@ -39,20 +39,4 @@ $(document).ready(function () {
         playOpenModalSound();
     });
 
-    if (localStorage.getItem("health") == null) {
-        localStorage.setItem("health", 100);
-    }
-
-    if (localStorage.getItem("energy") == null) {
-        localStorage.setItem("energy", 100);
-    }
-
-    if (localStorage.getItem("strength") == null) {
-        localStorage.setItem("strength", 100);
-    }
-
-    if (localStorage.getItem("gold") == null) {
-        localStorage.setItem("gold", 100);
-    }
-    
 });
