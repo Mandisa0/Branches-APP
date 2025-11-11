@@ -1,3 +1,4 @@
+import { apiUrl } from "config.js";
 let currentBranchImage = '';
 let currentBranchFile = 'necromancer/necromancer_01.json'
 let nextBranchFile = '';
@@ -81,7 +82,7 @@ function initialiseBranch(object, branchId) {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "https://phantomstudio.co.za/branches/initialise/branch",
+            url: apiUrl+"initialise/branch",
             data: {
                 branchId: branchId,
                 branchFile: '../json/' + currentBranchFile
@@ -162,4 +163,20 @@ function initialiseBranch(object, branchId) {
         });
 
     }, 500);
+}
+
+function getBranches() {
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "https://phantomstudio.co.za/branches/initialise/branch",
+        data: {
+            branchId: branchId,
+            branchFile: '../json/' + currentBranchFile
+        },
+
+        success: function (response) { }
+    });
+
 }
