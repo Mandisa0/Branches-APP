@@ -23,4 +23,5 @@ $(document).ready(function () {
 
 });
 
-loadpage('main-content', 'html/branches.html')
+loadpage('main-content', 'html/branches.html');
+getBranches();

@@ -1,24 +1,48 @@
-import { apiUrl } from "config.js";
+// let apiUrl = "http://127.0.0.1:5000/";
+var apiUrl = "https://phantomstudio.co.za/branches/";
+let currenBranchTitle = '';
 let currentBranchImage = '';
-let currentBranchFile = 'necromancer/necromancer_01.json'
+let currentBranchFile = '';
 let nextBranchFile = '';
+let currentBranchId = 1;
+
+function setCurentBranchTitlte(branchTitle) {
+    currenBranchTitle = branchTitle;
+}
+
+function setCurentBranchFile(branchTitle) {
+    currenBranchTitle = branchTitle;
+}
+
+function setCurentBranch(branchTitle, branchFile) {
+
+    console.log("branchTitle: " + branchTitle);
+    console.log('branchFile: ' + branchFile);
+    console.log('branchId: ' + currentBranchId);
+
+    currenBranchTitle = branchTitle;
+    currentBranchFile = branchFile;
+    localStorage.setItem(branchTitle, JSON.stringify({
+        branchFile: currentBranchFile,
+        branchId: currentBranchId
+    }));
+
+}
 
 function initialiseBranch(object, branchId) {
+
+    console.log($(object).attr("data-branch-title"));
 
     var audio = document.getElementById('branchOption');
     audio.currentTime = 0;
     audio.play();
 
-    if (branchId != 1) {
+    if (branchId != 1 && $(object).attr('data-health') != undefined) {
+
         health = parseInt(localStorage.getItem("health")) + parseInt($(object).attr('data-health'));
         energy = parseInt(localStorage.getItem("energy")) + parseInt($(object).attr('data-energy'));
         strength = parseInt(localStorage.getItem("strength")) + parseInt($(object).attr('data-strength'));
         gold = parseInt(localStorage.getItem("gold")) + parseInt($(object).attr('data-gold'));
-
-        localStorage.setItem("health", health);
-        localStorage.setItem("energy", energy);
-        localStorage.setItem("strength", strength);
-        localStorage.setItem("gold", gold);
 
         let toastext = '';
 
@@ -76,18 +100,28 @@ function initialiseBranch(object, branchId) {
         $("#strength").text(strength);
         $("#gold").text(gold);
 
+        localStorage.setItem("health", health);
+        localStorage.setItem("energy", energy);
+        localStorage.setItem("strength", strength);
+        localStorage.setItem("gold", gold);
+
+    }
+
+    if (currenBranchTitle != '') {
+        currentBranchId = branchId;
+        setCurentBranch(currenBranchTitle, currentBranchFile);
     }
 
     setTimeout(() => {
         $.ajax({
+            async: true,
             type: "GET",
             dataType: "json",
-            url: apiUrl+"initialise/branch",
+            url: apiUrl + "initialise/branch",
             data: {
                 branchId: branchId,
-                branchFile: '../json/' + currentBranchFile
+                branchFile: currentBranchFile
             },
-
             success: function (response) {
 
                 if (branchId = 1) {
@@ -97,7 +131,9 @@ function initialiseBranch(object, branchId) {
                 }
 
                 $('.text').text(response.branchText)
+
                 let branchOptions = '';
+
                 for (i = 0; i < response.branchResponses.length; i++) {
 
                     let healthEffect = 0;
@@ -106,8 +142,6 @@ function initialiseBranch(object, branchId) {
                     let goldEffect = 0;
 
                     for (let j = 0; j < response.branchResponses[i].branchEffects.length; j++) {
-
-                        console.log(response.branchResponses[i].branchEffects[j]);
 
                         if ('health' in response.branchResponses[i].branchEffects[j]) {
                             healthEffect = response.branchResponses[i].branchEffects[j].health;
@@ -147,12 +181,14 @@ function initialiseBranch(object, branchId) {
 
                     branchOptions += '<div data-branch-id="' + response.branchResponses[i].branchId + '" data-health="' + healthEffect + '" data-energy="' + energyEffect + '" data-strength="' + strengthEffect + '" data-gold="' + goldEffect + '" onclick="initialiseBranch(this, ' + response.branchResponses[i].branchId + ')" class="option">' + response.branchResponses[i].response + ' ' + branchOptionRequirements + '</div>';
                 }
+
                 if (response.branchResponses.length == 0) {
                     currentBranchFile = nextBranchFile
                     branchOptions += '<div onclick="initialiseBranch(this, 1)" class="option">Continue</div>';
                 }
+
                 $('.branchOptions').html(branchOptions);
-                console.log(branchOptions)
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error("Error:", textStatus, errorThrown);
@@ -163,20 +199,4 @@ function initialiseBranch(object, branchId) {
         });
 
     }, 500);
-}
-
-function getBranches() {
-
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: "https://phantomstudio.co.za/branches/initialise/branch",
-        data: {
-            branchId: branchId,
-            branchFile: '../json/' + currentBranchFile
-        },
-
-        success: function (response) { }
-    });
-
 }
