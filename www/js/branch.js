@@ -16,10 +16,6 @@ function setCurentBranchFile(branchTitle) {
 
 function setCurentBranch(branchTitle, branchFile) {
 
-    console.log("branchTitle: " + branchTitle);
-    console.log('branchFile: ' + branchFile);
-    console.log('branchId: ' + currentBranchId);
-
     currenBranchTitle = branchTitle;
     currentBranchFile = branchFile;
     localStorage.setItem(branchTitle, JSON.stringify({
@@ -30,8 +26,6 @@ function setCurentBranch(branchTitle, branchFile) {
 }
 
 function initialiseBranch(object, branchId) {
-
-    console.log($(object).attr("data-branch-title"));
 
     var audio = document.getElementById('branchOption');
     audio.currentTime = 0;
