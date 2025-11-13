@@ -121,7 +121,7 @@ function initialiseBranch(object, branchId) {
                 if (branchId = 1) {
                     currentBranchImage = response.branchImage;
                     nextBranchFile = response.nextBranchFile;
-                    $(".branchImage").attr('src', currentBranchImage);
+                    $(".branchImage").attr('src', apiUrl+"get/image?imageFile="+currentBranchImage);
                 }
 
                 $('.text').text(response.branchText)
