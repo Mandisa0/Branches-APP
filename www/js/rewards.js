@@ -77,6 +77,9 @@ $(document).ready(function () {
     if (localStorage.getItem("rewardDate") == null) {
         localStorage.setItem("rewardDate", formattedDate);
         triggerRewards();
+    }else if( localStorage.getItem("rewardDate") !=  formattedDate ){
+        localStorage.setItem("rewardDate", formattedDate);
+        triggerRewards();
     }
 
 });
