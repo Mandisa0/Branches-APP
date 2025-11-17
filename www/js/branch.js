@@ -116,13 +116,15 @@ function initialiseBranch(object, branchId) {
 
     var selectionClean = $(object).find('small').remove();
     selectionClean = $(object);
-    var historyText = '<div class="responseText">'+$(".text").text()+'</div>'+ '<div class="responseChoice">' + selectionClean.text()+"</div>";
+    var historyText = '<div class="responseChoice">' + selectionClean.text()+"</div>"+'<div class="responseText">'+$(".text").text()+'</div>';
     console.log('selection: ' + selectionClean.text())
 
-    if (localStorage.getItem(currentBranchFile + ".history") == null) {
-        localStorage.setItem(currentBranchFile + ".history", historyText);
+    if(selectionClean.text() != ''){
+    if (localStorage.getItem(currenBranchTitle + ".history") == null) {
+        localStorage.setItem(currenBranchTitle + ".history", historyText);
     } else {
-        localStorage.setItem(currentBranchFile + ".history", localStorage.getItem(currentBranchFile + ".history") + historyText);
+        localStorage.setItem(currenBranchTitle + ".history", historyText + localStorage.getItem(currenBranchTitle + ".history") );
+    }
     }
 
     setTimeout(() => {
@@ -200,7 +202,10 @@ function initialiseBranch(object, branchId) {
                     branchOptions += '<div onclick="initialiseBranch(this, 1)" class="option">Continue</div>';
                 }
 
-                $('.branchHistory').html(localStorage.getItem(currentBranchFile + ".history"))
+                if(localStorage.getItem(currenBranchTitle + ".history") != null){
+                $('.branchHistory').html("<div class='branchHistory'><b><i class='fa fa-clock-o'></i> Branch History</b><br><br>"+localStorage.getItem(currenBranchTitle + ".history"))+"</div>";
+                $('.responseChoice').prepend("<i style='display:inline-block' class='fa fa-arrow-right'></i> ");
+                }
 
                 $('.branchOptions').html(branchOptions);
 
