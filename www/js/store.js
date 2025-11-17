@@ -48,7 +48,7 @@ function buyStrength(amount, cost) {
     var toast = '<small style="color: gold;margin:5px;font-size:10px"><strong>-</strong> <i class="fa fa-coins"></i> ' + cost + ' Gold</small> <br>';
 
     LongToast.fire({
-        title: toast + '<small style="color: burlywood;margin:5px;font-size:10px"><strong>+</strong> <i class="fa fa-hand-fist"></i> ' + amount + ' Strength</small> <br>'+toast
+        title: '<small style="color: burlywood;margin:5px;font-size:10px"><strong>+</strong> <i class="fa fa-hand-fist"></i> ' + amount + ' Strength</small> <br>'+toast
     });
 
 }
