@@ -36,9 +36,9 @@
     .selection {
         width: 50%;
         border-radius: 5px;
-        padding: 8px;
-        padding-top: 10px;
-        padding-bottom: 3px;
+        padding: 20px;
+        padding-top: 15px;
+        padding-bottom: 10px;
         background-color: #333;
         color: #fff;
         position: relative;
@@ -188,6 +188,9 @@
         vertical-align: middle;
     }
 
+    .modal-dialog{
+        margin-top: 200px !important;
+    }
 
 }
 
@@ -376,6 +379,10 @@
         margin-top: 10px;
         height: auto;
         font-size: 10px;
+    }
+
+    .modal-dialog{
+        margin-top: 200px !important;
     }
 
 }
