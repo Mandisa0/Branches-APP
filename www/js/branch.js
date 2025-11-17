@@ -35,10 +35,6 @@ function formatNumberWithSign(number) {
 
 function initialiseBranch(object, branchId) {
 
-    if (localStorage.getItem(branchTitle + "History") != null) {
-        $('.branchHistory').text(localStorage.getItem(branchTitle + "History"))
-    }
-
     var audio = document.getElementById('branchOption');
     audio.currentTime = 0;
     audio.play();
@@ -120,17 +116,14 @@ function initialiseBranch(object, branchId) {
 
     var selectionClean = $(object).find('small').remove();
     selectionClean = $(object);
-    var historyText = $(".text").text() + '<br>' + selectionClean.text();
+    var historyText = '<div class="responseText">'+$(".text").text()+'</div>'+ '<div class="responseChoice">' + selectionClean.text()+"</div>";
     console.log('selection: ' + selectionClean.text())
 
-
-    if (localStorage.getItem(branchTitle + "History") == null) {
-        localStorage.setItem(branchTitle + "History", historyText);
+    if (localStorage.getItem(currentBranchFile + ".history") == null) {
+        localStorage.setItem(currentBranchFile + ".history", historyText);
     } else {
-        localStorage.setItem(branchTitle + "History", localStorage.getItem(branchTitle + "History") + historyText);
+        localStorage.setItem(currentBranchFile + ".history", localStorage.getItem(currentBranchFile + ".history") + historyText);
     }
-
-    $('.branchHistory').text(localStorage.getItem(branchTitle + "History"))
 
     setTimeout(() => {
         $.ajax({
@@ -206,6 +199,8 @@ function initialiseBranch(object, branchId) {
                     currentBranchFile = nextBranchFile
                     branchOptions += '<div onclick="initialiseBranch(this, 1)" class="option">Continue</div>';
                 }
+
+                $('.branchHistory').html(localStorage.getItem(currentBranchFile + ".history"))
 
                 $('.branchOptions').html(branchOptions);
 
