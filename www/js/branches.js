@@ -15,25 +15,29 @@ function getBranches() {
                 branchTitle = response.branches[i].title;
                 branchFile = response.branches[i].file;
 
+                var icon = '<i class="fa fa-play-circle" aria-hidden="true"></i>';
+
                 try{
                 if (localStorage.getItem(branchTitle) != null) {
                     branchData = JSON.parse(localStorage.getItem(branchTitle));
                     branchId = branchData.branchId;
                     branchFile = branchData.branchFile;
+                    icon = '<i class="fa fa-play-circle" aria-hidden="true"></i>';
                 }
                 }catch(Error){
                     console.log(Error)
                 }
 
+                
                 branches += '<div class="branch-container">';
                 branches += '<div class="image">';
                 branches += '<img class="branchImage" />';
                 branches += '</div>';
                 branches += '<table class="branch-table">';
                 branches += '<tr>';
-                branches += '<td style="width: 70%; text-align: left;">' + branchTitle + '</td>';
+                branches += '<td style="width: 70%; text-align: left;"><strong>' + branchTitle + '</strong></td>';
                 branches += '<td onclick="setCurentBranch(\'' + branchTitle + '\',\'' + branchFile + '\');loadpage(\'main-content\', \'html/branch.html\'),initialiseBranch(self, '+branchId+')"';
-                branches += 'style="width: 30%; text-align: right;margin-right: 50px;"><i class="fa fa-play-circle" aria-hidden="true"></i></td>';
+                branches += 'style="width: 30%; text-align: right;margin-right: 50px;">'+icon+'</td>';
                 branches += '</tr>';
                 branches += '</table>';
                 branches += '</div>';

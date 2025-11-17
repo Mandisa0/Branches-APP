@@ -1,8 +1,8 @@
 function triggerHealthReward(rewardValue) {
 
-    var reward = parseInt($('#health').text()) + rewardValue;
+    var reward = parseInt($('.health').text()) + rewardValue;
     localStorage.setItem("health", reward);
-    $('#health').text(reward);
+    $('.health').text(reward);
 
     LongToast.fire({
         title: '<small style="color: tomato;margin:5px;font-size:10px">Daily Reward <strong>+</strong> <i class="fa fa-heart"></i> '+rewardValue+' Health</small> <br>'
@@ -12,9 +12,9 @@ function triggerHealthReward(rewardValue) {
 
 function triggerEnergyReward(rewardValue) {
 
-    var reward = parseInt($('#energy').text()) + rewardValue;
+    var reward = parseInt($('.energy').text()) + rewardValue;
     localStorage.setItem("energy", reward);
-    $('#energy').text(reward);
+    $('.energy').text(reward);
 
     LongToast.fire({
         title: '<small style="color: lightblue;margin:5px;font-size:10px">Daily Reward <strong>+</strong> <i class="fa fa-bolt"></i> '+rewardValue+' Energy</small> <br>'
@@ -24,9 +24,9 @@ function triggerEnergyReward(rewardValue) {
 
 function triggerStrengthReward(rewardValue) {
 
-    var reward = parseInt($('#strength').text()) + rewardValue;
+    var reward = parseInt($('.strength').text()) + rewardValue;
     localStorage.setItem("strength", reward);
-    $('#strength').text(reward);
+    $('.strength').text(reward);
 
     LongToast.fire({
         title: '<small style="color: burlywood;margin:5px;font-size:10px">Daily Reward <strong>+</strong> <i class="fa fa-hand-fist"></i> '+rewardValue+' Strength</small> <br>'
@@ -36,9 +36,9 @@ function triggerStrengthReward(rewardValue) {
 
 function triggerGoldReward(rewardValue) {
 
-    var reward = parseInt($('#gold').text()) + rewardValue;
+    var reward = parseInt($('.gold').text()) + rewardValue;
     localStorage.setItem("gold", reward);
-    $('#gold').text(reward);
+    $('.gold').text(reward);
 
     LongToast.fire({
         title: '<small style="color: gold;margin:5px;font-size:10px">Daily Reward <strong>+</strong> <i class="fa fa-coins"></i> '+rewardValue+' Gold</small> <br>'
@@ -49,19 +49,23 @@ function triggerGoldReward(rewardValue) {
 function triggerRewards(){
 
     setTimeout(function(){
+            playBranchSound();
             triggerHealthReward(100);
         }, 2000)
 
         
         setTimeout(function(){
+            playBranchSound();
             triggerEnergyReward(100);
         }, 4000)
 
         setTimeout(function(){
+            playBranchSound();
             triggerStrengthReward(100);
         }, 6000)
 
         setTimeout(function(){
+            playBranchSound();
             triggerGoldReward(100);
         }, 8000)
 

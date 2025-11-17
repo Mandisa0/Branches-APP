@@ -25,7 +25,19 @@ function setCurentBranch(branchTitle, branchFile) {
 
 }
 
+function formatNumberWithSign(number) {
+    if (number > 0) {
+        return "+" + number;
+    } else {
+        return String(number); // Convert to string for consistent output
+    }
+}
+
 function initialiseBranch(object, branchId) {
+
+    if (localStorage.getItem(branchTitle + "History") != null) {
+        $('.branchHistory').text(localStorage.getItem(branchTitle + "History"))
+    }
 
     var audio = document.getElementById('branchOption');
     audio.currentTime = 0;
@@ -41,19 +53,19 @@ function initialiseBranch(object, branchId) {
         let toastext = '';
 
         if (parseInt($(object).attr('data-health')) != 0) {
-            toastext += '<small style="color: tomato;margin:5px;font-size:10px"><i class="fa fa-heart"></i> ' + $(object).attr('data-health') + ' health</small><br>'
+            toastext += '<small style="color: tomato;margin:5px;font-size:10px"><i class="fa fa-heart"></i> ' + formatNumberWithSign($(object).attr('data-health')) + ' health</small><br>'
         }
 
         if (parseInt($(object).attr('data-energy')) != 0) {
-            toastext += '<small style="color: lightblue;margin:5px;font-size:10px"><i class="fa fa-bolt"></i> ' + $(object).attr('data-energy') + ' energy</small><br>'
+            toastext += '<small style="color: lightblue;margin:5px;font-size:10px"><i class="fa fa-bolt"></i> ' + formatNumberWithSign($(object).attr('data-energy')) + ' energy</small><br>'
         }
 
         if (parseInt($(object).attr('data-strength')) != 0) {
-            toastext += '<small style="color: burlywood;margin:5px;font-size:10px"><i class="fa fa-hand-fist"></i> ' + $(object).attr('data-strength') + ' strength</small><br>'
+            toastext += '<small style="color: burlywood;margin:5px;font-size:10px"><i class="fa fa-hand-fist"></i> ' + formatNumberWithSign($(object).attr('data-strength')) + ' strength</small><br>'
         }
 
         if (parseInt($(object).attr('data-gold')) != 0) {
-            toastext += '<small style="color: gold;margin:5px;font-size:10px"><i class="fa fa-coins"></i> ' + $(object).attr('data-gold') + ' gold</small><br>'
+            toastext += '<small style="color: gold;margin:5px;font-size:10px"><i class="fa fa-coins"></i> ' + formatNumberWithSign($(object).attr('data-gold')) + ' gold</small><br>'
         }
 
 
@@ -89,10 +101,10 @@ function initialiseBranch(object, branchId) {
             return
         }
 
-        $("#health").text(health);
-        $("#energy").text(energy);
-        $("#strength").text(strength);
-        $("#gold").text(gold);
+        $(".health").text(health);
+        $(".energy").text(energy);
+        $(".strength").text(strength);
+        $(".gold").text(gold);
 
         localStorage.setItem("health", health);
         localStorage.setItem("energy", energy);
@@ -105,6 +117,20 @@ function initialiseBranch(object, branchId) {
         currentBranchId = branchId;
         setCurentBranch(currenBranchTitle, currentBranchFile);
     }
+
+    var selectionClean = $(object).find('small').remove();
+    selectionClean = $(object);
+    var historyText = $(".text").text() + '<br>' + selectionClean.text();
+    console.log('selection: ' + selectionClean.text())
+
+
+    if (localStorage.getItem(branchTitle + "History") == null) {
+        localStorage.setItem(branchTitle + "History", historyText);
+    } else {
+        localStorage.setItem(branchTitle + "History", localStorage.getItem(branchTitle + "History") + historyText);
+    }
+
+    $('.branchHistory').text(localStorage.getItem(branchTitle + "History"))
 
     setTimeout(() => {
         $.ajax({
@@ -121,7 +147,7 @@ function initialiseBranch(object, branchId) {
                 if (branchId = 1) {
                     currentBranchImage = response.branchImage;
                     nextBranchFile = response.nextBranchFile;
-                    $(".branchImage").attr('src', apiUrl+"get/image?imageFile="+currentBranchImage);
+                    $(".branchImage").attr('src', apiUrl + "get/image?imageFile=" + currentBranchImage);
                 }
 
                 $('.text').text(response.branchText)
@@ -158,19 +184,19 @@ function initialiseBranch(object, branchId) {
                     let branchOptionRequirements = '';
 
                     if (healthEffect != 0) {
-                        branchOptionRequirements += '<small style="color: tomato;">[<i class="fa fa-heart"></i> <b id="health">' + healthEffect + '</b>]</small> ';
+                        branchOptionRequirements += '<small style="color: tomato;">[<i class="fa fa-heart"></i> <b id="health">' + formatNumberWithSign(healthEffect) + '</b>]</small> ';
                     }
 
                     if (energyEffect != 0) {
-                        branchOptionRequirements += '<small style="color: lightblue;">[<i class="fa fa-bolt"></i> <b id="energy">' + energyEffect + '</b>]</small> ';
+                        branchOptionRequirements += '<small style="color: lightblue;">[<i class="fa fa-bolt"></i> <b id="energy">' + formatNumberWithSign(energyEffect) + '</b>]</small> ';
                     }
 
                     if (strengthEffect != 0) {
-                        branchOptionRequirements += '<small style="color: burlywood;">[<i class="fa fa-hand-fist"></i> <b id="strength">' + strengthEffect + '</b>]</small> ';
+                        branchOptionRequirements += '<small style="color: burlywood;">[<i class="fa fa-hand-fist"></i> <b id="strength">' + formatNumberWithSign(strengthEffect) + '</b>]</small> ';
                     }
 
                     if (goldEffect != 0) {
-                        branchOptionRequirements += '<small style="color: gold;">[<i class="fa fa-coins"></i> <b id="gold">' + goldEffect + '</b>]</small> ';
+                        branchOptionRequirements += '<small style="color: gold;">[<i class="fa fa-coins"></i> <b id="gold">' + formatNumberWithSign(goldEffect) + '</b>]</small> ';
                     }
 
                     branchOptions += '<div data-branch-id="' + response.branchResponses[i].branchId + '" data-health="' + healthEffect + '" data-energy="' + energyEffect + '" data-strength="' + strengthEffect + '" data-gold="' + goldEffect + '" onclick="initialiseBranch(this, ' + response.branchResponses[i].branchId + ')" class="option">' + response.branchResponses[i].response + ' ' + branchOptionRequirements + '</div>';
@@ -182,6 +208,8 @@ function initialiseBranch(object, branchId) {
                 }
 
                 $('.branchOptions').html(branchOptions);
+
+                $(".health").text(localStorage.getItem("health"));
 
             },
             error: function (jqXHR, textStatus, errorThrown) {

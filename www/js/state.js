@@ -16,10 +16,10 @@ $(document).ready(function () {
         localStorage.setItem("gold", 100);
     }
 
-    $("#health").text(localStorage.getItem("health"));
-    $("#energy").text(localStorage.getItem("energy"));
-    $("#strength").text(localStorage.getItem("strength"));
-    $("#gold").text(localStorage.getItem("gold"));
+    $(".health").text(localStorage.getItem("health"));
+    $(".energy").text(localStorage.getItem("energy"));
+    $(".strength").text(localStorage.getItem("strength"));
+    $(".gold").text(localStorage.getItem("gold"));
 
 });
 

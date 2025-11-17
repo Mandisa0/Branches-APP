@@ -189,7 +189,20 @@
     }
 
     .modal-dialog{
-        margin-top: 200px !important;
+        margin-top: 0px !important;
+        height: auto;
+    }
+
+    .items .row{
+        padding:5px;
+        padding-left: 10px;
+        border: 0px solid whitesmoke;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+
+    .items .row button{
+        transform: scale(.8);
     }
 
 }
