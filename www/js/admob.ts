@@ -32,3 +32,5 @@ export async function initialize(): Promise<void> {
     await AdMob.showConsentForm();
   }
 }
+
+initialize()
