@@ -1,27 +1,39 @@
-$(document).ready(function () {
+export type PlayerStats = {
+  health: number;
+  energy: number;
+  strength: number;
+  gold: number;
+};
 
-    if (localStorage.getItem("health") == null) {
-        localStorage.setItem("health", '100');
+export const defaultStats: PlayerStats = {
+  health: 100,
+  energy: 100,
+  strength: 100,
+  gold: 100,
+};
+
+export function getStat(key: keyof PlayerStats): number {
+  const value = localStorage.getItem(key);
+  return value !== null ? parseInt(value, 10) : defaultStats[key];
+}
+
+export function setStat(key: keyof PlayerStats, value: number): void {
+  localStorage.setItem(key, value.toString());
+}
+
+export function initializeStats(): void {
+  (Object.keys(defaultStats) as Array<keyof PlayerStats>).forEach((key) => {
+    if (localStorage.getItem(key) === null) {
+      setStat(key, defaultStats[key]);
     }
+  });
+}
 
-    if (localStorage.getItem("energy") == null) {
-        localStorage.setItem("energy", '100');
+export function updateStatsInDOM(): void {
+  (Object.keys(defaultStats) as Array<keyof PlayerStats>).forEach((key) => {
+    const element = document.querySelector(`.${key}`) as HTMLElement | null;
+    if (element) {
+      element.textContent = getStat(key).toString();
     }
-
-    if (localStorage.getItem("strength") == null) {
-        localStorage.setItem("strength", '100');
-    }
-
-    if (localStorage.getItem("gold") == null) {
-        localStorage.setItem("gold", '100');
-    }
-
-    $(".health").text(localStorage.getItem("health"));
-    $(".energy").text(localStorage.getItem("energy"));
-    $(".strength").text(localStorage.getItem("strength"));
-    $(".gold").text(localStorage.getItem("gold"));
-
-});
-
-loadpage('main-content', 'html/branches.html');
-getBranches();
+  });
+}

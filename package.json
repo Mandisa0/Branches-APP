@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "build:capacitor": "vite build && xcopy dist www /E /I /Y",
-  "preview": "vite preview"
+    "dev": "vite",
+    "build": "vite build",
+    "build:capacitor": "vite build && xcopy dist www /E /I /Y",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,9 @@
     "bootstrap": "^5.3.8",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-native-google-mobile-ads": "^16.0.0"
+    "react-native-google-mobile-ads": "^16.0.0",
+    "sweetalert2": "^11.26.3",
+    "sweetalert2-react-content": "^5.1.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.6",

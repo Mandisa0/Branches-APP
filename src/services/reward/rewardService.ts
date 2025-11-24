@@ -1,9 +1,10 @@
-function triggerHealthReward(rewardValue) {
+import { setStat, getStat } from "../player/statsService";
 
-    var reward = parseInt($('.health').text()) + rewardValue;
-    localStorage.setItem("health", reward);
-    $('.health').text(reward);
+export function triggerHealthReward(rewardValue: number) {
 
+    var reward = getStat('health') + rewardValue;
+    setStat("health", reward);
+    
     LongToast.fire({
         title: '<small style="color: tomato;margin:5px;font-size:10px">Daily Reward <strong>+</strong> <i class="fa fa-heart"></i> '+rewardValue+' Health</small> <br>'
     });
