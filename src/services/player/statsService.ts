@@ -1,19 +1,19 @@
 $(document).ready(function () {
 
     if (localStorage.getItem("health") == null) {
-        localStorage.setItem("health", 100);
+        localStorage.setItem("health", '100');
     }
 
     if (localStorage.getItem("energy") == null) {
-        localStorage.setItem("energy", 100);
+        localStorage.setItem("energy", '100');
     }
 
     if (localStorage.getItem("strength") == null) {
-        localStorage.setItem("strength", 100);
+        localStorage.setItem("strength", '100');
     }
 
     if (localStorage.getItem("gold") == null) {
-        localStorage.setItem("gold", 100);
+        localStorage.setItem("gold", '100');
     }
 
     $(".health").text(localStorage.getItem("health"));

@@ -11,9 +11,8 @@ export const initializeAdMob = async () => {
       await AdMob.requestTrackingAuthorization();
     }
 
-    // Show test banner
     await AdMob.showBanner({
-      adId: 'ca-app-pub-3940256099942544/6300978111', // Google test banner
+      adId: 'ca-app-pub-3940256099942544/6300978111',
       adSize: BannerAdSize.ADAPTIVE_BANNER,
       position: 'BOTTOM_CENTER',
     });
