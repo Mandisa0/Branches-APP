@@ -15,8 +15,7 @@ const Stats: React.FC = () => {
                     <small> <FontAwesomeIcon icon={faBolt} />  <b className="energy">1000</b></small>
                 </div>
                 <div className="col">
-                    <small> <FontAwesomeIcon icon={faHandFist} />  <b
-                            className="strength">1000</b></small>
+                    <small> <FontAwesomeIcon icon={faHandFist} />  <b className="strength">1000</b></small>
                 </div>
                 <div className="col">
                     <small> <FontAwesomeIcon icon={faCoins} />  <b className="gold">1000</b></small>
