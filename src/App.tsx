@@ -8,7 +8,7 @@ import './css/index.css';
 
 export const App: React.FC = () => {
 
-  const [content, setContent] = useState("dashboard");
+  const [mainContent, setMainContent] = useState("dashboard");
 
   useEffect(() => {
     initializeAdMob();
@@ -20,8 +20,8 @@ export const App: React.FC = () => {
       <Header title='Branches'></Header>
       <Stats></Stats>
       <Content>
-        {content === "dashboard" && <h1>Yes</h1>}
-        {content === "settings" && <h1>No</h1>}
+        {mainContent === "dashboard" && <h1>Yes</h1>}
+        {mainContent === "settings" && <h1>No</h1>}
       </Content>
     </div>
   );
