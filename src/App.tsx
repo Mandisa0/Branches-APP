@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import Header from './components/Header';
 import Stats from './components/Stats';
 import Content from './components/Content';
+import Branches from './components/Branches';
 import { initializeAdMob } from './services/admob/admob';
 import { updateStatsInDOM } from './services/player/statsService';
 import './css/index.css';
@@ -20,8 +21,7 @@ export const App: React.FC = () => {
       <Header title='Branches'></Header>
       <Stats></Stats>
       <Content>
-        {mainContent === "dashboard" && <h1>Yes</h1>}
-        {mainContent === "settings" && <h1>No</h1>}
+        <Branches></Branches>
       </Content>
     </div>
   );
