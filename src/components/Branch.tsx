@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from "react";
 import { useEffect } from 'react';
+import { contentContext, branchContext } from '../Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 const Branch: React.FC = () => {
-    const [items, setItems] = useState([]);
+    const [branchText, setBranchText] = useState([]);
+    const [branchOptions, setBranchOptions] = useState([]);
+    const [branchImage, setBranchImage] = useState([]);
     const [loading, setLoading] = useState(false);
+    const branch = useContext(branchContext);
 
     useEffect(() => {
 
@@ -14,7 +18,8 @@ const Branch: React.FC = () => {
             setLoading(true);
 
             try {
-                const response = await fetch("https://phantomstudio.co.za/branches/get/branches", {
+
+                const response = await fetch(`https://phantomstudio.co.za/branches/initialise/branch?branchFile=${branch?.branch[0]}&branchId=branchFile=${branch?.branch[1]}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -23,7 +28,9 @@ const Branch: React.FC = () => {
 
                 const data = await response.json();
 
-                setItems(data.branches);
+                setBranchImage(data.branchImage);
+                setBranchText(data.branchText);
+                setBranchOptions(data.branchResponses);
                 console.log(data)
             } catch (error) {
                 console.error("POST request failed:", error);
@@ -34,29 +41,38 @@ const Branch: React.FC = () => {
 
         handlePost();
 
-    })
+    }, [])
 
     return (
         <div>
             <div className="image">
-                <img className="branchImage" />
+                <img src={'https://phantomstudio.co.za/branches/get/image?imageFile=' + branchImage} className="branchImage" />
             </div>
 
             <div className="text">
                 <p className="card-text placeholder-glow">
-                    <span className="placeholder w-100 placeholder-sm"></span>
-                    <span className="placeholder w-80 placeholder-sm"></span>
-                    <span className="placeholder w-60 placeholder-sm"></span>
+                    {branchText}
                 </p>
             </div>
             <div className="branchOptions">
-            {items.map((item, index) =>
-                    <div className="option">
-                        <p className="card-text placeholder-glow">
-                            <span className="placeholder col-10 placeholder-sm"></span>
-                        </p>
+                {branchOptions.map((option, index) => (
+                    <div key={index} className="option">
+                        <p className="card-text placeholder-glow">{option.response}</p>
+                        {option.branchEffects.map((effect, effectIndex) => (
+                            
+                            effect === "health" ? (
+                                <p key={effectIndex}>s</p>
+                            ) : effect === "energy" ? (
+                                <p key={effectIndex}>s</p>
+                            ) : effect === "strength" ? (
+                                <p key={effectIndex}>s</p>
+                            ) : effect === "gold" ? (
+                                <p key={effectIndex}>s</p>
+                            ) : effect[0]
+
+                        ))}
                     </div>
-            )}
+                ))}
             </div>
 
         </div>

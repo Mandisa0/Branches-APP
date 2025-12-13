@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { contentContext, branchContext } from '../Context';
 import { useState } from "react";
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +8,13 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 const Branches: React.FC = () => {
     const [branches, setBranches] = useState([]);
     const [loading, setLoading] = useState(false);
+    const content = useContext(contentContext);
+    const branch = useContext(branchContext);
+
+    const loadBranch = (branchFileName: string, branchId: number) =>{
+        content?.setContent("Branch");
+        branch?.setBranch([branchFileName, branchId])
+    }
 
     useEffect(() => {
 
@@ -34,18 +42,18 @@ const Branches: React.FC = () => {
 
         handlePost();
 
-    })
+    }, [])
 
     return (
         <div>
             {branches.map((branch, index) =>
-                <div className="results">
-                    <div className="branch-container">
-                        <div className="image">
-                            <img src={branch['image']} className="branchImage" />
-                        </div>
-                        <table className="branch-table">
-                            <tr>
+                <div key={index} className="branch-container">
+                    <div className="image">
+                        <img src={branch['image']} className="branchImage" />
+                    </div>
+                    <table className="branch-table">
+                        <tbody>
+                            <tr onClick={() => loadBranch(branch['file'], 1)}>
                                 <td style={{ width: "70%", textAlign: "left" }}>
                                     <strong>{branch['title']}</strong>
                                 </td>
@@ -53,8 +61,8 @@ const Branches: React.FC = () => {
                                     <strong><FontAwesomeIcon icon={faPlay} /></strong>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>
