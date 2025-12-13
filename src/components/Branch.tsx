@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
-const Branches: React.FC = () => {
-    const [branches, setBranches] = useState([]);
+const Branch: React.FC = () => {
+    const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Branches: React.FC = () => {
 
                 const data = await response.json();
 
-                setBranches(data.branches);
+                setItems(data.branches);
                 console.log(data)
             } catch (error) {
                 console.error("POST request failed:", error);
@@ -38,27 +38,29 @@ const Branches: React.FC = () => {
 
     return (
         <div>
-            {branches.map((branch, index) =>
-                <div className="results">
-                    <div className="branch-container">
-                        <div className="image">
-                            <img src={branch['image']} className="branchImage" />
-                        </div>
-                        <table className="branch-table">
-                            <tr>
-                                <td style={{ width: "70%", textAlign: "left" }}>
-                                    <strong>{branch['title']}</strong>
-                                </td>
-                                <td style={{ width: "70%", textAlign: "right" }}>
-                                    <strong><FontAwesomeIcon icon={faPlay} /></strong>
-                                </td>
-                            </tr>
-                        </table>
+            <div className="image">
+                <img className="branchImage" />
+            </div>
+
+            <div className="text">
+                <p className="card-text placeholder-glow">
+                    <span className="placeholder w-100 placeholder-sm"></span>
+                    <span className="placeholder w-80 placeholder-sm"></span>
+                    <span className="placeholder w-60 placeholder-sm"></span>
+                </p>
+            </div>
+            <div className="branchOptions">
+            {items.map((item, index) =>
+                    <div className="option">
+                        <p className="card-text placeholder-glow">
+                            <span className="placeholder col-10 placeholder-sm"></span>
+                        </p>
                     </div>
-                </div>
             )}
+            </div>
+
         </div>
     );
 }
 
-export default Branches;
+export default Branch;
