@@ -3,50 +3,113 @@ import { useState } from "react";
 import { useEffect } from 'react';
 import { contentContext, branchContext } from '../Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faBolt, faHandFist, faCoins, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { getBranch, setCurentBranch, formatNumberWithSign, getGameStateForce } from '../services/branch/branchService';
+import { getStat, PlayerStats, setStat, fireToast, updateStatsInDOM, completeBranch } from '../services/player/statsService';
+import { setGameState, setGameStateForce } from '../services/branch/branchService';
+import { getCurrentBranch } from '../services/branch/branchService';
+import { apiUrl } from '../config.js/config';
+
 
 const Branch: React.FC = () => {
+    const content = useContext(contentContext);
+    const branch = useContext(branchContext);
+
+    const [branchTitle, setBranchTitle] = useState([]);
     const [branchText, setBranchText] = useState([]);
     const [branchOptions, setBranchOptions] = useState([]);
     const [branchImage, setBranchImage] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const branch = useContext(branchContext);
+    const [nextBranch, setNextBranch] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+
+    const loadBranch = (branchTitle: string, branchFileName: string, branchId: number, effects: object) => {
+
+        let statExit = false;
+        let successStatToastText = '';
+        let failStatToastText = '';
+        let statData = Object;
+
+        Object.keys(effects).forEach(key => {
+            const value = effects[key as keyof typeof effects];
+
+            if (value['health'] != undefined) {
+                statData = setStat('health', value['health'] + getStat('health'));
+            }
+            if (value['energy'] != undefined) {
+                statData = setStat('energy', value['energy'] + getStat('energy'));
+            }
+            if (value['strength'] != undefined) {
+                statData = setStat('strength', value['strength'] + getStat('strength'));
+            }
+            if (value['gold'] != undefined) {
+                statData = setStat('gold', value['gold'] + getStat('gold'));
+            }
+
+
+            successStatToastText += statData.successToastText;
+            failStatToastText += statData.failToastText;
+
+            if (statData.exit == true) {
+                statExit = true
+            }
+        });
+
+
+        if (statExit == false) {
+            content?.setContent("Branch");
+            branch?.setBranch([branchTitle, branchFileName, branchId])
+            setCurentBranch(branchTitle, branchFileName, branchId)
+            fireToast(successStatToastText)
+        } else {
+            fireToast(failStatToastText)
+        }
+
+
+        updateStatsInDOM();
+    }
 
     useEffect(() => {
 
-        const handlePost = async () => {
-            setLoading(true);
 
+
+        const initializeBranch = async () => {
             try {
+                const branchData = await getBranch(String(branch?.branch[1]), Number(branch?.branch[2]));
 
-                const response = await fetch(`https://phantomstudio.co.za/branches/initialise/branch?branchFile=${branch?.branch[0]}&branchId=branchFile=${branch?.branch[1]}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                });
+                if (branchData != null) {
+                    setGameState('Branch');
+                    setBranchImage(branchData?.branchImage);
+                    setBranchText(branchData?.branchText);
+                    setBranchOptions(branchData?.branchOptions);
+                    setNextBranch(branchData?.nextBranchFile);
+                    setIsLoading(false);
+                } else {
+                    completeBranch(JSON.parse(getCurrentBranch()).branchTitle);
+                    localStorage.removeItem(JSON.parse(getCurrentBranch()).branchTitle);
+                    content?.setContent("Branches");
+                    setGameState('Branches');
+                }
 
-                const data = await response.json();
-
-                setBranchImage(data.branchImage);
-                setBranchText(data.branchText);
-                setBranchOptions(data.branchResponses);
-                console.log(data)
-            } catch (error) {
-                console.error("POST request failed:", error);
-            } finally {
-                setLoading(false);
+            } catch (e) {
+                console.log('Branch Error');
             }
+
         };
 
-        handlePost();
+        setIsLoading(true);
+        if (nextBranch == undefined) {
+            setGameState('Branches');
+            content?.setContent("Branches");
+        } else {
+            initializeBranch();
+        }
 
-    }, [])
+    }, [branch])
 
     return (
         <div>
             <div className="image">
-                <img src={'https://phantomstudio.co.za/branches/get/image?imageFile=' + branchImage} className="branchImage" />
+                <img src={apiUrl + '/get/image?imageFile=' + branchImage} className="branchImage" />
             </div>
 
             <div className="text">
@@ -55,24 +118,71 @@ const Branch: React.FC = () => {
                 </p>
             </div>
             <div className="branchOptions">
-                {branchOptions.map((option, index) => (
-                    <div key={index} className="option">
-                        <p className="card-text placeholder-glow">{option.response}</p>
-                        {option.branchEffects.map((effect, effectIndex) => (
-                            
-                            effect === "health" ? (
-                                <p key={effectIndex}>s</p>
-                            ) : effect === "energy" ? (
-                                <p key={effectIndex}>s</p>
-                            ) : effect === "strength" ? (
-                                <p key={effectIndex}>s</p>
-                            ) : effect === "gold" ? (
-                                <p key={effectIndex}>s</p>
-                            ) : effect[0]
+                {isLoading || (branchOptions?.length > 0 && branch) ? (
+                    branchOptions.map((option, index) => (
+                        <div
+                            key={index}
+                            className="option"
+                            onClick={() =>
+                                loadBranch(
+                                    branch.branch[0],
+                                    branch.branch[1],
+                                    option.branchId,
+                                    option.branchEffects
+                                )
+                            }
+                        >
+                            <div className="card-text placeholder-glow">
+                                {option.response}
+                            </div>
 
-                        ))}
+                            {option.branchEffects.map((effect, index) => {
+                                const key = Object.keys(effect)[0];
+                                const value = effect[key];
+
+                                if (value === 0) return null;
+
+                                let icon = null;
+                                if (key === "health") icon = <FontAwesomeIcon style={{ color: "tomato" }} icon={faHeart} />;
+                                else if (key === "energy") icon = <FontAwesomeIcon style={{ color: "lightblue" }} icon={faBolt} />;
+                                else if (key === "strength") icon = <FontAwesomeIcon style={{ color: "burlywood" }} icon={faHandFist} />;
+                                else if (key === "gold") icon = <FontAwesomeIcon style={{ color: "gold" }} icon={faCoins} />;
+
+                                return (
+                                    <div key={index} style={{ display: "inline-block", marginRight: 5 }}>
+                                        <small>
+                                            {icon}
+                                            {formatNumberWithSign(value)}
+                                        </small>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ))
+                ) : (
+
+                    <div
+                        key='1'
+                        className="option"
+                        onClick={() =>
+                            loadBranch(
+                                branch.branch[0],
+                                nextBranch,
+                                1,
+                                []
+                            )
+                        }
+                    >
+
+                        <div style={{ display: "inline-block", marginRight: 5 }}>
+                            Continue
+                            <div style={{ display: "inline-block", marginLeft: 5 }}>
+                                <FontAwesomeIcon style={{ color: "aqua" }} icon={faArrowRight} />
+                            </div>
+                        </div>
+
                     </div>
-                ))}
+                )}
             </div>
 
         </div>

@@ -1,4 +1,13 @@
-import { AdMob, BannerAdSize } from '@capacitor-community/admob';
+import {
+  AdMob, BannerAdSize, RewardAdOptions,
+  AdMobRewardItem
+} from '@capacitor-community/admob';
+
+
+interface RewardItem {
+  type: string;
+  amount: number;
+}
 
 export const initializeAdMob = async () => {
   try {
@@ -20,5 +29,27 @@ export const initializeAdMob = async () => {
     console.log('Banner should appear now!');
   } catch (err) {
     console.error('AdMob initialization failed:', err);
+  }
+};
+
+export const showRewardAd = async (
+  onReward: (reward: RewardItem) => void
+): Promise<void> => {
+  try {
+    await AdMob.prepareRewardVideoAd({
+      adId: 'ca-app-pub-3940256099942544/6300978111',
+    });
+
+    const listener = await AdMob.addListener(
+      'onRewardedVideoReward',
+      (reward: RewardItem) => {
+        onReward(reward);
+        listener.remove();
+      }
+    );
+
+    await AdMob.showRewardVideoAd();
+  } catch (err) {
+    console.error('Reward ad failed:', err);
   }
 };

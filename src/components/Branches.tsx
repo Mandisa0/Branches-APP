@@ -3,68 +3,73 @@ import { contentContext, branchContext } from '../Context';
 import { useState } from "react";
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { getBranches, setCurentBranch, getRandomBranchImage } from '../services/branch/branchService';
+import { setGameState, setGameStateForce, getGameStateForce } from '../services/branch/branchService';
+import { getCurrentBranch } from '../services/branch/branchService';
 
 const Branches: React.FC = () => {
-    const [branches, setBranches] = useState([]);
-    const [loading, setLoading] = useState(false);
     const content = useContext(contentContext);
     const branch = useContext(branchContext);
 
-    const loadBranch = (branchFileName: string, branchId: number) =>{
+    const [randomImage, setRandomImage] = useState(null);
+    const [branchesData, setBranchesData] = useState([]);
+
+    const loadBranch = (branchTitle: string, branchFileName: string, branchId: number) => {
         content?.setContent("Branch");
-        branch?.setBranch([branchFileName, branchId])
+        branch?.setBranch([branchTitle, branchFileName, branchId])
+        setCurentBranch(branchTitle, branchFileName, branchId)
     }
 
     useEffect(() => {
+        const initializeBranches = async () => {
+            const data = await getBranches();
+            setBranchesData(data.branches);
 
-        const handlePost = async () => {
-            setLoading(true);
+            const currentImage = await getRandomBranchImage();
+            setRandomImage(currentImage);
 
-            try {
-                const response = await fetch("https://phantomstudio.co.za/branches/get/branches", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                });
-
-                const data = await response.json();
-
-                setBranches(data.branches);
-                console.log(data)
-            } catch (error) {
-                console.error("POST request failed:", error);
-            } finally {
-                setLoading(false);
-            }
+            setGameState('Branches')
         };
 
-        handlePost();
+        var savedBranch = JSON.parse(getCurrentBranch())  
+
+        if(savedBranch != 'undefined' && savedBranch != null){
+            loadBranch(savedBranch.branchTitle, savedBranch.branchFile, savedBranch.branchId);
+        }else{
+            initializeBranches();
+        }
 
     }, [])
 
     return (
         <div>
-            {branches.map((branch, index) =>
-                <div key={index} className="branch-container">
-                    <div className="image">
-                        <img src={branch['image']} className="branchImage" />
+
+            <div className="image">
+                <img src={randomImage} className="branchImage" />
+            </div>
+
+            <div className="branchOptions">
+                {branchesData.map((branch, index) =>
+
+
+                    <div
+                        key={index}
+                        className="option"
+                        onClick={() =>
+                            loadBranch(branch['title'], branch['file'], 1)
+                        }
+                    >
+                        <div style={{ display: "inline-block", marginRight: 5 }}>
+                            {branch['description']}
+                            <div key={index} style={{ display: "inline-block", marginLeft: 5 }}>
+                                    <FontAwesomeIcon style={{ color: "aqua" }} icon={faArrowRight} />
+                            </div>
+                        </div>
+
                     </div>
-                    <table className="branch-table">
-                        <tbody>
-                            <tr onClick={() => loadBranch(branch['file'], 1)}>
-                                <td style={{ width: "70%", textAlign: "left" }}>
-                                    <strong>{branch['title']}</strong>
-                                </td>
-                                <td style={{ width: "70%", textAlign: "right" }}>
-                                    <strong><FontAwesomeIcon icon={faPlay} /></strong>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

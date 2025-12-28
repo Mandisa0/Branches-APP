@@ -1,20 +1,36 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLeaf, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faLeaf, faBars, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import { showModal } from '../services/modal/modalService';
+import { modalContext} from '../Context';
 
 interface HeaderProps {
   title: string;
 }
 
 const Header: React.FC<HeaderProps> = ({title}) => {
+
+  const modalContent = useContext(modalContext);
+
+  const updateModalContext = (context: string) => {
+    showModal(context);
+    modalContent?.setModalContent(context);
+    console.log(modalContent)
+  }
+
+  useEffect(() => {
+    console.log(modalContent)
+
+  })
+
   return (
     <div className="header">
       <div className="container">
         <div className="row">
           <div className="col" style={{ textAlign: 'left' }}>
-            <small style={{ color: 'whitesmoke' }}>
-              <FontAwesomeIcon icon={faLeaf} />&nbsp;{title}
+            <small onClick={() => updateModalContext("Menu")} style={{ color: 'whitesmoke' }}>
+              <FontAwesomeIcon icon={faBars} />&nbsp;{title}
             </small>
           </div>
 
@@ -25,8 +41,8 @@ const Header: React.FC<HeaderProps> = ({title}) => {
             className="col"
             style={{ textAlign: 'right' }}
           >
-            <small style={{ color: 'whitesmoke' }} data-bs-toggle="modal" data-bs-target="#modal">
-              &nbsp;<FontAwesomeIcon icon={faBars} />
+            <small onClick={() => updateModalContext("Store")} style={{ color: 'whitesmoke' }} data-bs-toggle="modal" data-bs-target="#modal">
+              &nbsp;<FontAwesomeIcon icon={faShoppingBasket} />
             </small>
           </div>
         </div>

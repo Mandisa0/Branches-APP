@@ -11,6 +11,6 @@ export const modalContext = createContext<{
 } | null>(null);
 
 export const branchContext = createContext<{
-  branch: [string, number];
-  setBranch: React.Dispatch<React.SetStateAction<[string, number]>>;
+  branch: [string, string, number];
+  setBranch: React.Dispatch<React.SetStateAction<[string, string, number]>>;
 } | null>(null);

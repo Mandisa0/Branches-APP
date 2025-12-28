@@ -25,6 +25,7 @@
     "@capacitor/android": "^7.4.4",
     "@capacitor/cli": "^7.4.4",
     "@capacitor/core": "^7.4.4",
+    "@fortawesome/fontawesome-free": "^7.1.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-regular-svg-icons": "^7.1.0",
@@ -34,7 +35,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-native-google-mobile-ads": "^16.0.0",
-    "sweetalert2": "^11.26.3",
+    "sweetalert2": "^11.26.17",
     "sweetalert2-react-content": "^5.1.0"
   },
   "devDependencies": {
