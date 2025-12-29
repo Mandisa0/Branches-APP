@@ -6,7 +6,7 @@ import Branches from './components/Branches';
 import Branch from './components/Branch';
 import Modal from './components/Modal';
 import Store from './components/Store';
-import Menu from './components/Menu';
+import History from './components/History';
 import { contentContext, modalContext, branchContext } from './Context';
 import { initializeAdMob } from './services/admob/admob';
 import { updateStatsInDOM } from './services/player/statsService';
@@ -42,7 +42,7 @@ export const App: React.FC = () => {
 
             <Modal>
               {modalContent === "Store" && <Store></Store>}
-              {modalContent === "Menu" && <Menu></Menu>}
+              {modalContent === "History" && <History></History>}
             </Modal>
 
           </branchContext.Provider>

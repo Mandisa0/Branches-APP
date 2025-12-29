@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLeaf, faBars, faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import { faLeaf, faBars, faShoppingBasket, faBook } from '@fortawesome/free-solid-svg-icons';
 import { showModal } from '../services/modal/modalService';
 import { modalContext} from '../Context';
 
@@ -19,18 +19,13 @@ const Header: React.FC<HeaderProps> = ({title}) => {
     console.log(modalContent)
   }
 
-  useEffect(() => {
-    console.log(modalContent)
-
-  })
-
   return (
     <div className="header">
       <div className="container">
         <div className="row">
           <div className="col" style={{ textAlign: 'left' }}>
-            <small onClick={() => updateModalContext("Menu")} style={{ color: 'whitesmoke' }}>
-              <FontAwesomeIcon icon={faBars} />&nbsp;{title}
+            <small onClick={() => updateModalContext("History")} style={{ color: 'whitesmoke' }}>
+              <FontAwesomeIcon icon={faBook} />&nbsp;{title}
             </small>
           </div>
 

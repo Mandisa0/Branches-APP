@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faBolt, faHandFist, faCoins } from '@fortawesome/free-solid-svg-icons';
+import { playAudio } from '../sound/soundService';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -16,6 +17,14 @@ const ToastLong = Swal.mixin({
   timerProgressBar: false
 });
 
+const ToastClose = Swal.mixin({
+  toast: true,
+  showConfirmButton: false,
+  timer: undefined,
+  showCloseButton: true,
+  timerProgressBar: false
+});
+
 export type PlayerStats = {
   health: number;
   energy: number;
@@ -24,10 +33,10 @@ export type PlayerStats = {
 };
 
 export const defaultStats: PlayerStats = {
-  health: 1000,
-  energy: 1000,
-  strength: 1000,
-  gold: 1000,
+  health: 100,
+  energy: 100,
+  strength: 100,
+  gold: 100,
 };
 
 function formatNumberWithSign(number: number) {
@@ -93,6 +102,7 @@ export function fireToast(toastText: string) {
     Toast.fire({
       title: toastText
     });
+    playAudio('branchOption')
   }
 }
 
@@ -101,6 +111,16 @@ export function fireToastLong(toastText: string) {
     ToastLong.fire({
       title: toastText
     });
+    playAudio('branchOption')
+  }
+}
+
+export function fireToastClose(toastText: string) {
+  if (toastText != '') {
+    ToastClose.fire({
+      title: toastText
+    });
+    playAudio('branchOption')
   }
 }
 
@@ -123,13 +143,66 @@ export function updateStatsInDOM(): void {
 
 export function completeBranch(branchTitle: string) {
 
-  if(localStorage.getItem('completedBranches') === null){
+  if (localStorage.getItem('completedBranches') === null) {
     localStorage.setItem('completedBranches', branchTitle);
-  }else{
+  } else {
     var completedBranches = localStorage.getItem('completedBranches');
     localStorage.setItem('completedBranches', completedBranches + ',' + branchTitle);
   }
 
   fireToastLong('<small style="color: whitesmoke;margin:5px;font-size:10px"><i style="color: gold" class="fa fa-star"></i> Branch Completed: ' + branchTitle + "</small>")
 
+}
+
+function capitalizeParagraph(text: string): string {
+  if (!text) return '';
+
+  // Split by sentence endings, keep the punctuation
+  return text
+    .split(/([.!?]\s*)/) // split by . ! ? and keep the separator
+    .map(sentence => {
+      // Trim any leading spaces
+      const trimmed = sentence.trimStart();
+      if (!trimmed) return sentence; // preserve empty parts
+      // Capitalize first character
+      return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+    })
+    .join(''); // join back into a full paragraph
+}
+
+export function addHistory(historyText: string) {
+
+  try {
+
+    historyText = capitalizeParagraph(historyText)
+
+    if (localStorage.getItem('history') === null) {
+      localStorage.setItem('history', historyText);
+    } else if (historyText != '' && historyText != null && historyText != 'undefined') {
+      var localHistory = localStorage.getItem('history');
+      var localHistoryArr = localHistory?.split('|||');
+
+      if (!localHistoryArr?.includes(historyText)) {
+        console.log(localHistory)
+        localStorage.setItem('history', localHistory + '|||' + historyText )
+      }
+
+    }
+
+  } catch (e) {
+    console.log(e);
+  }
+
+}
+
+export function getFormattedHistory() {
+
+  var localHistoryArr = [];
+
+  if (localStorage.getItem('history') !== null) {
+    var localHistory = localStorage.getItem('history');
+    localHistoryArr = localHistory?.split('|||');
+  }
+
+  return localHistoryArr;
 }

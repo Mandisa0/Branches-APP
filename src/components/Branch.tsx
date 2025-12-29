@@ -9,6 +9,7 @@ import { getStat, PlayerStats, setStat, fireToast, updateStatsInDOM, completeBra
 import { setGameState, setGameStateForce } from '../services/branch/branchService';
 import { getCurrentBranch } from '../services/branch/branchService';
 import { apiUrl } from '../config.js/config';
+import { addHistory } from '../services/player/statsService';
 
 
 const Branch: React.FC = () => {
@@ -22,7 +23,7 @@ const Branch: React.FC = () => {
     const [nextBranch, setNextBranch] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
-    const loadBranch = (branchTitle: string, branchFileName: string, branchId: number, effects: object) => {
+    const loadBranch = (branchTitle: string, branchFileName: string, optionText: string, branchId: number, effects: object) => {
 
         let statExit = false;
         let successStatToastText = '';
@@ -52,13 +53,15 @@ const Branch: React.FC = () => {
             if (statData.exit == true) {
                 statExit = true
             }
+
         });
 
 
         if (statExit == false) {
+            addHistory("You "+optionText)
             content?.setContent("Branch");
-            branch?.setBranch([branchTitle, branchFileName, branchId])
-            setCurentBranch(branchTitle, branchFileName, branchId)
+            branch?.setBranch([branchTitle, branchFileName, Number(branchId)])
+            setCurentBranch(branchTitle, branchFileName,  Number(branchId))
             fireToast(successStatToastText)
         } else {
             fireToast(failStatToastText)
@@ -70,13 +73,13 @@ const Branch: React.FC = () => {
 
     useEffect(() => {
 
-
-
         const initializeBranch = async () => {
             try {
-                const branchData = await getBranch(String(branch?.branch[1]), Number(branch?.branch[2]));
+                alert(branch?.branch[2])
+                const branchData = await getBranch(String(branch?.branch[1]), String(branch?.branch[2]));
 
                 if (branchData != null) {
+                    addHistory(String(branchData?.branchText))
                     setGameState('Branch');
                     setBranchImage(branchData?.branchImage);
                     setBranchText(branchData?.branchText);
@@ -126,7 +129,8 @@ const Branch: React.FC = () => {
                             onClick={() =>
                                 loadBranch(
                                     branch.branch[0],
-                                    branch.branch[1],
+                                    option.branchFile,
+                                    option.response,
                                     option.branchId,
                                     option.branchEffects
                                 )
@@ -168,6 +172,7 @@ const Branch: React.FC = () => {
                             loadBranch(
                                 branch.branch[0],
                                 nextBranch,
+                                'Continue',
                                 1,
                                 []
                             )

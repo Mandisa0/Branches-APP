@@ -1,6 +1,6 @@
 import {
   AdMob, BannerAdSize, RewardAdOptions,
-  AdMobRewardItem
+  AdMobRewardItem, RewardAdPluginEvents
 } from '@capacitor-community/admob';
 
 
@@ -37,11 +37,11 @@ export const showRewardAd = async (
 ): Promise<void> => {
   try {
     await AdMob.prepareRewardVideoAd({
-      adId: 'ca-app-pub-3940256099942544/6300978111',
+      adId: 'ca-app-pub-3940256099942544/5224354917',
     });
 
     const listener = await AdMob.addListener(
-      'onRewardedVideoReward',
+      RewardAdPluginEvents.Rewarded,
       (reward: RewardItem) => {
         onReward(reward);
         listener.remove();

@@ -7,6 +7,8 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { getBranches, setCurentBranch, getRandomBranchImage } from '../services/branch/branchService';
 import { setGameState, setGameStateForce, getGameStateForce } from '../services/branch/branchService';
 import { getCurrentBranch } from '../services/branch/branchService';
+import { playAudio } from '../services/sound/soundService';
+import { addHistory } from '../services/player/statsService';
 
 const Branches: React.FC = () => {
     const content = useContext(contentContext);
@@ -15,10 +17,13 @@ const Branches: React.FC = () => {
     const [randomImage, setRandomImage] = useState(null);
     const [branchesData, setBranchesData] = useState([]);
 
-    const loadBranch = (branchTitle: string, branchFileName: string, branchId: number) => {
+    const loadBranch = (branchTitle: string, branchFileName: string, branchDescription: string, branchId: number) => {
         content?.setContent("Branch");
         branch?.setBranch([branchTitle, branchFileName, branchId])
         setCurentBranch(branchTitle, branchFileName, branchId)
+        if (branchDescription != '') {
+            addHistory(branchDescription)
+        }
     }
 
     useEffect(() => {
@@ -32,11 +37,11 @@ const Branches: React.FC = () => {
             setGameState('Branches')
         };
 
-        var savedBranch = JSON.parse(getCurrentBranch())  
+        var savedBranch = JSON.parse(getCurrentBranch())
 
-        if(savedBranch != 'undefined' && savedBranch != null){
-            loadBranch(savedBranch.branchTitle, savedBranch.branchFile, savedBranch.branchId);
-        }else{
+        if (savedBranch != 'undefined' && savedBranch != null) {
+            loadBranch(savedBranch.branchTitle, savedBranch.branchFile, '', savedBranch.branchId);
+        } else {
             initializeBranches();
         }
 
@@ -57,13 +62,13 @@ const Branches: React.FC = () => {
                         key={index}
                         className="option"
                         onClick={() =>
-                            loadBranch(branch['title'], branch['file'], 1)
+                            loadBranch(branch['title'], branch['file'], branch['description'], 1)
                         }
                     >
                         <div style={{ display: "inline-block", marginRight: 5 }}>
                             {branch['description']}
                             <div key={index} style={{ display: "inline-block", marginLeft: 5 }}>
-                                    <FontAwesomeIcon style={{ color: "aqua" }} icon={faArrowRight} />
+                                <FontAwesomeIcon style={{ color: "aqua" }} icon={faArrowRight} />
                             </div>
                         </div>
 
