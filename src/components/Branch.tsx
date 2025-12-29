@@ -75,7 +75,6 @@ const Branch: React.FC = () => {
 
         const initializeBranch = async () => {
             try {
-                alert(branch?.branch[2])
                 const branchData = await getBranch(String(branch?.branch[1]), String(branch?.branch[2]));
 
                 if (branchData != null) {
