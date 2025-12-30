@@ -10,6 +10,7 @@ import { setGameState, setGameStateForce } from '../services/branch/branchServic
 import { getCurrentBranch } from '../services/branch/branchService';
 import { apiUrl } from '../config.js/config';
 import { addHistory } from '../services/player/statsService';
+import { isOnline } from '../services/network/networkService';
 
 
 const Branch: React.FC = () => {
@@ -24,6 +25,17 @@ const Branch: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const loadBranch = (branchTitle: string, branchFileName: string, optionText: string, branchId: number, effects: object) => {
+
+        isOnline().then(response => {
+            if (response == false) {
+                content?.setContent('Network');
+                return;
+            }
+        })
+
+        if(isLoading == true){
+            return;
+        }
 
         let statExit = false;
         let successStatToastText = '';
@@ -52,16 +64,17 @@ const Branch: React.FC = () => {
 
             if (statData.exit == true) {
                 statExit = true
+                return;
             }
 
         });
 
 
         if (statExit == false) {
-            addHistory("You "+optionText)
+            addHistory("You " + optionText)
             content?.setContent("Branch");
             branch?.setBranch([branchTitle, branchFileName, Number(branchId)])
-            setCurentBranch(branchTitle, branchFileName,  Number(branchId))
+            setCurentBranch(branchTitle, branchFileName, Number(branchId))
             fireToast(successStatToastText)
         } else {
             fireToast(failStatToastText)

@@ -1,4 +1,5 @@
 import { apiUrl } from "../../config.js/config";
+import { getCompletedBranches } from "../player/statsService";
 
 type Branch = {
     image: string;
@@ -17,8 +18,10 @@ export async function getBranches() {
             }
         });
         const branchesData = await response.json();
+        var filteredBranches = filterCompletedBranches(branchesData.branches);
+        console.log(filteredBranches)
 
-        return { 'branches': getRandomBranches(branchesData.branches, 1) }
+        return { 'branches': getRandomBranches(filteredBranches, 3) }
     } catch (error) {
         console.error("POST:", error);
 
@@ -109,11 +112,29 @@ function getRandomBranches(branches: Branch[], count: number = 3): Branch[] {
         .slice(0, count);
 }
 
+function filterCompletedBranches(branches: Branch[]): any{
+
+    var filteredBranches = [];
+    var completedBranches = getCompletedBranches()?.split(',')
+
+    for(let i=0; i<branches.length; i++){
+
+        if(
+            !completedBranches?.includes(branches[i]['title']) && 
+            (completedBranches?.includes(branches[i]['requirements']) || branches[i]['requirements'] == null)
+        ){
+            filteredBranches.push(branches[i]);
+        }
+
+    }
+
+    return filteredBranches;
+}
+
 export function setGameState(gameState: string) {
 
     return localStorage.setItem('gameState', gameState);
 }
-
 
 export function getGameState() {
 

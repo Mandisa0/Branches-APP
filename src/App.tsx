@@ -7,9 +7,11 @@ import Branch from './components/Branch';
 import Modal from './components/Modal';
 import Store from './components/Store';
 import History from './components/History';
+import Network from './components/Network';
 import { contentContext, modalContext, branchContext } from './Context';
 import { initializeAdMob } from './services/admob/admob';
 import { updateStatsInDOM } from './services/player/statsService';
+import { isOnline } from './services/network/networkService';
 import './css/index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -20,9 +22,20 @@ export const App: React.FC = () => {
   const [branch, setBranch] = useState<[string, string, number]>(["someFile", "f", 1]);
 
   useEffect(() => {
+
     initializeAdMob();
     updateStatsInDOM();
+
   }, []);
+
+  useEffect(() => {
+    isOnline().then(response => {
+      if (response == false) {
+        setContent('Network')
+        return;
+      }
+    })
+  }, [content]);
 
   return (
     <div>
@@ -38,6 +51,7 @@ export const App: React.FC = () => {
             <Content>
               {content === "Branches" && <Branches></Branches>}
               {content === "Branch" && <Branch></Branch>}
+              {content === "Network" && <Network></Network>}
             </Content>
 
             <Modal>

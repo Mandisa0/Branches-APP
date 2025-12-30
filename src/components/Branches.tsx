@@ -9,6 +9,7 @@ import { setGameState, setGameStateForce, getGameStateForce } from '../services/
 import { getCurrentBranch } from '../services/branch/branchService';
 import { playAudio } from '../services/sound/soundService';
 import { addHistory } from '../services/player/statsService';
+import { isOnline } from '../services/network/networkService';
 
 const Branches: React.FC = () => {
     const content = useContext(contentContext);
@@ -18,6 +19,14 @@ const Branches: React.FC = () => {
     const [branchesData, setBranchesData] = useState([]);
 
     const loadBranch = (branchTitle: string, branchFileName: string, branchDescription: string, branchId: number) => {
+
+        isOnline().then(response => {
+            if (response == false) {
+                content?.setContent('Network');
+                return;
+            }
+        })
+
         content?.setContent("Branch");
         branch?.setBranch([branchTitle, branchFileName, branchId])
         setCurentBranch(branchTitle, branchFileName, branchId)

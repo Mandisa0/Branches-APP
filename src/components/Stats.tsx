@@ -9,16 +9,16 @@ const Stats: React.FC = () => {
         <div className="container">
             <div className="row">
                 <div className="col">
-                    <small> <FontAwesomeIcon style={{ color: "tomato" }} icon={faHeart} /> <b className="health">1000</b></small>
+                    <small> <FontAwesomeIcon style={{ color: "tomato" }} icon={faHeart} /> <b className="health">100</b></small>
                 </div>
                 <div className="col">
-                    <small> <FontAwesomeIcon style={{ color: "lightblue" }} icon={faBolt} />  <b className="energy">1000</b></small>
+                    <small> <FontAwesomeIcon style={{ color: "lightblue" }} icon={faBolt} />  <b className="energy">100</b></small>
                 </div>
                 <div className="col">
-                    <small> <FontAwesomeIcon style={{ color: "burlywood" }} icon={faHandFist} />  <b className="strength">1000</b></small>
+                    <small> <FontAwesomeIcon style={{ color: "burlywood" }} icon={faHandFist} />  <b className="strength">100</b></small>
                 </div>
                 <div className="col">
-                    <small> <FontAwesomeIcon  style={{ color: "gold" }} icon={faCoins} />  <b className="gold">1000</b></small>
+                    <small> <FontAwesomeIcon  style={{ color: "gold" }} icon={faCoins} />  <b className="gold">100</b></small>
                 </div>
             </div>
         </div>

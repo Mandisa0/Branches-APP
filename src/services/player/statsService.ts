@@ -34,7 +34,7 @@ export type PlayerStats = {
 
 export const defaultStats: PlayerStats = {
   health: 100,
-  energy: 100,
+  energy: 0,
   strength: 100,
   gold: 100,
 };
@@ -152,6 +152,11 @@ export function completeBranch(branchTitle: string) {
 
   fireToastLong('<small style="color: whitesmoke;margin:5px;font-size:10px"><i style="color: gold" class="fa fa-star"></i> Branch Completed: ' + branchTitle + "</small>")
 
+}
+
+export function getCompletedBranches(){
+
+  return localStorage.getItem('completedBranches');
 }
 
 function capitalizeParagraph(text: string): string {

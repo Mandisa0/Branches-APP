@@ -25,6 +25,7 @@
     "@capacitor/android": "^7.4.4",
     "@capacitor/cli": "^7.4.4",
     "@capacitor/core": "^7.4.4",
+    "@capacitor/network": "^7.0.3",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
@@ -39,6 +40,7 @@
     "sweetalert2-react-content": "^5.1.0"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@types/react": "^19.2.6",
     "@types/react-dom": "^19.2.3",
     "typescript": "^5.9.3",
