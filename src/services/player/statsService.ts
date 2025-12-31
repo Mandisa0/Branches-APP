@@ -34,7 +34,7 @@ export type PlayerStats = {
 
 export const defaultStats: PlayerStats = {
   health: 100,
-  energy: 0,
+  energy: 100,
   strength: 100,
   gold: 100,
 };
@@ -89,9 +89,8 @@ export function setStat(key: keyof PlayerStats, value: number): object {
     successToastText += '<small style="color: whitesmoke;margin:5px;font-size:10px"><i style="color: gold" class="fa-solid fa-coins"></i> ' + stringValue + ' gold</small><br>';
   }
 
-  if (exit == false) {
-    localStorage.setItem(key, value.toString());
-  }
+  localStorage.setItem(key, value.toString());
+
 
   return { exit: exit, successToastText: successToastText, failToastText: failToastText };
 

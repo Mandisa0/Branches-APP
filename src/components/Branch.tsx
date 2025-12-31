@@ -42,20 +42,26 @@ const Branch: React.FC = () => {
         let failStatToastText = '';
         let statData = Object;
 
+        let checkedStats = {'health': 0, 'energy': 0, 'strength': 0, 'gold': 0};
+
         Object.keys(effects).forEach(key => {
             const value = effects[key as keyof typeof effects];
 
             if (value['health'] != undefined) {
                 statData = setStat('health', value['health'] + getStat('health'));
+                checkedStats.health = value['health'];
             }
             if (value['energy'] != undefined) {
                 statData = setStat('energy', value['energy'] + getStat('energy'));
+                checkedStats.energy = value['energy'];
             }
             if (value['strength'] != undefined) {
                 statData = setStat('strength', value['strength'] + getStat('strength'));
+                checkedStats.strength = value['strength'];
             }
             if (value['gold'] != undefined) {
                 statData = setStat('gold', value['gold'] + getStat('gold'));
+                checkedStats.gold = value['gold'];
             }
 
 
@@ -64,7 +70,7 @@ const Branch: React.FC = () => {
 
             if (statData.exit == true) {
                 statExit = true
-                return;
+                return
             }
 
         });
@@ -77,6 +83,12 @@ const Branch: React.FC = () => {
             setCurentBranch(branchTitle, branchFileName, Number(branchId))
             fireToast(successStatToastText)
         } else {
+
+            setStat('health', getStat('health') -  checkedStats.health);
+            setStat('energy', getStat('energy') - checkedStats.energy);
+            setStat('strength', getStat('strength') - checkedStats.strength);
+            setStat('gold', getStat('gold') - checkedStats.gold);
+
             fireToast(failStatToastText)
         }
 
