@@ -11,7 +11,14 @@ type Branch = {
 export async function getBranches() {
 
     try {
-        const response = await fetch(apiUrl + "/get/branches", {
+
+        let endpoint = '/get/branches';
+
+        if( localStorage.getItem('firstLaunch') == null ){
+            endpoint = '/get/tutorialBranch'
+        }
+
+        const response = await fetch(apiUrl + endpoint, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -20,6 +27,10 @@ export async function getBranches() {
         const branchesData = await response.json();
         var filteredBranches = filterCompletedBranches(branchesData.branches);
         console.log(filteredBranches)
+
+        if( localStorage.getItem('firstLaunch') == null ){
+            localStorage.setItem('firstLaunch', '1')
+        }
 
         return { 'branches': getRandomBranches(filteredBranches, 3) }
     } catch (error) {

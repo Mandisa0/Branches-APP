@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeaf, faBars } from '@fortawesome/free-solid-svg-icons';
@@ -7,55 +7,68 @@ import { setStat, getStat, PlayerStats, fireToast, updateStatsInDOM, fireToastCl
 import { showRewardAd } from '../services/admob/admob';
 import { hideModal } from '../services/modal/modalService';
 
-const buyItem = (item: string, value: number, cost: number) => {
 
-  var toastText = "";
 
-  if (getStat('gold') - cost < 0) {
-    toastText = '<small style="color: whitesmoke;margin:5px;font-size:10px">You don not have enough gold</small>';
-  } else {
+
+const Store: React.FC = () => {
+
+  const [loadingAd, setLoadingAd] = useState(false);
+
+  const buyItem = (item: string, value: number, cost: number) => {
+
+    var toastText = "";
+
+    if (getStat('gold') - cost < 0) {
+      toastText = '<small style="color: whitesmoke;margin:5px;font-size:10px">You don not have enough gold</small>';
+    } else {
+
+      var statData = setStat(item as keyof PlayerStats, value + getStat(item as keyof PlayerStats));
+      toastText += statData.successToastText;
+
+      var statData = setStat('gold', getStat('gold') - cost);
+      toastText += statData.successToastText;
+
+    }
+
+    fireToast(toastText);
+    updateStatsInDOM();
+
+  }
+
+  const buyItemReward = (item: string, value: number) => {
+
+    var toastText = "";
 
     var statData = setStat(item as keyof PlayerStats, value + getStat(item as keyof PlayerStats));
     toastText += statData.successToastText;
 
-    var statData = setStat('gold', getStat('gold') - cost);
-    toastText += statData.successToastText;
+
+    fireToastClose('<small style="color: whitesmoke;margin:5px;font-size:10px">Reward Granted</small><br>' + toastText);
+    updateStatsInDOM();
 
   }
 
-  fireToast(toastText);
-  updateStatsInDOM();
+  const getRewardItem = (item: string, value: number) => {
 
-}
+    setLoadingAd(true);
 
-const buyItemReward = (item: string, value: number) => {
-
-  var toastText = "";
-
-  var statData = setStat(item as keyof PlayerStats, value + getStat(item as keyof PlayerStats));
-  toastText += statData.successToastText;
-
-
-  fireToastClose('<small style="color: whitesmoke;margin:5px;font-size:10px">Reward Granted</small><br>'+toastText);
-  updateStatsInDOM();
-
-}
-
-const getRewardItem = (item: string, value: number) => {
-
-  showRewardAd( (reward) => {
+    showRewardAd((reward) => {
       hideModal()
       buyItemReward(item, value);
-  });
+      setLoadingAd(false)
+    });
 
-}
+  }
 
-
-const Store: React.FC = () => {
   return (
     <div className="container items">
 
+      <center>
+        {loadingAd === true && <small style={{fontSize: "10px"}}>loading please wait...<br></br><br></br></small>}
+      </center>
+
       <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "5px" }} className="row">
+
         <table style={{ width: "100%", color: "whitesmoke", border: "0px solid white" }}>
           <tbody>
             <tr>

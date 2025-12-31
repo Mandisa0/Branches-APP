@@ -21,7 +21,7 @@ export const initializeAdMob = async () => {
     }
 
     await AdMob.showBanner({
-      adId: 'ca-app-pub-3940256099942544/6300978111',
+      adId: 'ca-app-pub-4948879885168622/5285040324',
       adSize: BannerAdSize.ADAPTIVE_BANNER,
       position: 'BOTTOM_CENTER',
     });
@@ -37,7 +37,7 @@ export const showRewardAd = async (
 ): Promise<void> => {
   try {
     await AdMob.prepareRewardVideoAd({
-      adId: 'ca-app-pub-3940256099942544/5224354917',
+      adId: 'ca-app-pub-4948879885168622/2155340648',
     });
 
     const listener = await AdMob.addListener(
