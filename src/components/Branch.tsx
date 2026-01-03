@@ -136,7 +136,7 @@ const Branch: React.FC = () => {
     return (
         <div>
             <div className="image">
-                <img src={apiUrl + '/get/image?imageFile=' + branchImage} className="branchImage" />
+                <img alt='' src={apiUrl + '/get/image?imageFile=' + branchImage} className="branchImage" />
             </div>
 
             <div className="text">

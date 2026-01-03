@@ -7,14 +7,31 @@ import { getFormattedHistory } from '../services/player/statsService';
 const History: React.FC = () => {
 
     const [history, setHistory] = useState([]);
+    const [emptyHistory, setEmptyHistory] = useState('');
 
     useEffect(() => {
-        setHistory(getFormattedHistory())
+        if (getFormattedHistory().length == 0) {
+            setEmptyHistory('The collective has no recollection.')
+        } else {
+            setHistory(getFormattedHistory())
+        }
     }, [])
 
     return (
 
         <div className="container">
+
+            {getFormattedHistory().length == 0 &&
+                <center>
+                    <div>
+                        <small style={{ fontSize: "10px" }}>
+                            {emptyHistory}
+                        </small>
+                        <div style={{ margin: "10px" }}></div>
+                    </div>
+                </center>
+            }
+
             {history.slice().reverse().map((historyText, index) => (
 
                 <div key={index}>
@@ -22,7 +39,7 @@ const History: React.FC = () => {
                         <FontAwesomeIcon style={{ color: "whitesmoke", fontSize: "5px" }} icon={faCircle} />&nbsp;
                         {historyText}
                     </small>
-                    <div style={{margin: "10px"}}></div>
+                    <div style={{ margin: "10px" }}></div>
                 </div>
 
             ))}

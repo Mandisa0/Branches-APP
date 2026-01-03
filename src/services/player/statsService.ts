@@ -33,10 +33,10 @@ export type PlayerStats = {
 };
 
 export const defaultStats: PlayerStats = {
-  health: 100,
-  energy: 100,
+  health: 200,
+  energy: 500,
   strength: 100,
-  gold: 100,
+  gold: 300,
 };
 
 function formatNumberWithSign(number: number) {

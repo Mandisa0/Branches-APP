@@ -80,12 +80,12 @@ const Store: React.FC = () => {
                   <tbody>
                     <tr>
                       <td>
-                        <small><strong>Potion Of Health</strong></small>
+                        <small><strong>Etherial Health</strong></small>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <small>+30 health</small>
+                        <small>+100 health</small>
                       </td>
                     </tr>
                   </tbody>
@@ -94,10 +94,10 @@ const Store: React.FC = () => {
               <td style={{ width: "100px" }}>
                 <center>
                   <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
-                    <small onClick={() => buyItem('health', 30, 50)} style={{ color: "gold" }}><i className="fa fa-coins"></i> <b>50</b></small>
+                    <small onClick={() => buyItem('health', 100, 50)} style={{ color: "gold" }}><i className="fa fa-coins"></i> <b>50</b></small>
                   </button>
                   <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
-                    <small onClick={() => getRewardItem('health', 30, 50)} style={{ color: "gold" }}><i className="fa fa-video-camera"></i></small>
+                    <small onClick={() => getRewardItem('health', 100, 50)} style={{ color: "gold" }}><i className="fa fa-video-camera"></i></small>
                   </button>
                 </center>
               </td>
@@ -120,12 +120,12 @@ const Store: React.FC = () => {
                   <tbody>
                     <tr>
                       <td>
-                        <small><strong>Potion Of Energy</strong></small>
+                        <small><strong>Etherial Energy</strong></small>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <small>+30 energy</small>
+                        <small>+100 energy</small>
                       </td>
                     </tr>
                   </tbody>
@@ -134,10 +134,10 @@ const Store: React.FC = () => {
               <td style={{ width: "100px" }}>
                 <center>
                   <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
-                    <small onClick={() => buyItem('energy', 30, 50)} style={{ color: "gold" }}><i className="fa fa-coins"></i> <b>50</b></small>
+                    <small onClick={() => buyItem('energy', 100, 50)} style={{ color: "gold" }}><i className="fa fa-coins"></i> <b>50</b></small>
                   </button>
                   <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
-                    <small onClick={() => getRewardItem('energy', 30, 50)} style={{ color: "gold" }}><i className="fa fa-video-camera"></i></small>
+                    <small onClick={() => getRewardItem('energy', 100, 50)} style={{ color: "gold" }}><i className="fa fa-video-camera"></i></small>
                   </button>
                 </center>
               </td>
@@ -160,12 +160,12 @@ const Store: React.FC = () => {
                   <tbody>
                     <tr>
                       <td>
-                        <small><strong>Potion Of Strength</strong></small>
+                        <small><strong>Etherial Strength</strong></small>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <small>+30 strength</small>
+                        <small>+100 strength</small>
                       </td>
                     </tr>
                   </tbody>
@@ -174,10 +174,50 @@ const Store: React.FC = () => {
               <td style={{ width: "100px" }}>
                 <center>
                   <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
-                    <small onClick={() => buyItem('strength', 30, 50)} style={{ color: "gold" }}><i className="fa fa-coins"></i> <b>50</b></small>
+                    <small onClick={() => buyItem('strength', 100, 50)} style={{ color: "gold" }}><i className="fa fa-coins"></i> <b>50</b></small>
                   </button>
                   <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
-                    <small onClick={() => getRewardItem('strength', 30, 50)} style={{ color: "gold" }}><i className="fa fa-video-camera"></i></small>
+                    <small onClick={() => getRewardItem('strength', 100, 50)} style={{ color: "gold" }}><i className="fa fa-video-camera"></i></small>
+                  </button>
+                </center>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br></br>
+
+      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "5px" }} className="row">
+        <table style={{ width: "100%", color: "whitesmoke", border: "0px solid white" }}>
+          <tbody>
+            <tr>
+              <td style={{ padding: "10px" }}>
+                <i style={{ color: "gold" }} className="fa fa-coins"></i>
+              </td>
+              <td>
+                <table style={{ width: "100%", color: "whitesmoke", border: "0px solid white" }}>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <small><strong>Etherial Gold</strong></small>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <small>+100 Gold</small>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td style={{ width: "100px" }}>
+                <center>
+                  <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
+                    <small style={{ color: "gold" }}><i className="fa fa-coins"></i> <b>-</b></small>
+                  </button>
+                  <button style={{ backgroundColor: "grey", float: "right", width: "80px" }} className="btn btn-warning" >
+                    <small onClick={() => getRewardItem('gold', 100, 50)} style={{ color: "gold" }}><i className="fa fa-video-camera"></i></small>
                   </button>
                 </center>
               </td>

@@ -17,6 +17,7 @@ const Branches: React.FC = () => {
 
     const [randomImage, setRandomImage] = useState(null);
     const [branchesData, setBranchesData] = useState([]);
+    const [emptyBranches, setEmptyBranches] = useState('')
 
     const loadBranch = (branchTitle: string, branchFileName: string, branchDescription: string, branchId: number) => {
 
@@ -37,8 +38,17 @@ const Branches: React.FC = () => {
 
     useEffect(() => {
         const initializeBranches = async () => {
+
+            
+
             const data = await getBranches();
             setBranchesData(data.branches);
+            console.log('w1')
+            console.log(data?.branches.length)
+            console.log('w2')
+            if(data?.branches.length == 0){
+                setEmptyBranches('The collective is silent for now...')
+            }
 
             const currentImage = await getRandomBranchImage();
             setRandomImage(currentImage);
@@ -60,8 +70,20 @@ const Branches: React.FC = () => {
         <div>
 
             <div className="image">
-                <img src={randomImage} className="branchImage" />
+                <img alt='' src={randomImage} className="branchImage" />
             </div>
+
+            {emptyBranches != '' &&
+                            <center>
+                                <br></br>
+                                <div>
+                                    <small style={{ fontSize: "10px", color: "whitesmoke" }}>
+                                        {emptyBranches}
+                                    </small>
+                                    <div style={{ margin: "10px" }}></div>
+                                </div>
+                            </center>
+                        }
 
             <div className="branchOptions">
                 {branchesData.map((branch, index) =>
