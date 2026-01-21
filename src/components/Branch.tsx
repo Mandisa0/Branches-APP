@@ -77,7 +77,7 @@ const Branch: React.FC = () => {
 
 
         if (statExit == false) {
-            addHistory("You " + optionText)
+            addHistory(optionText)
             content?.setContent("Branch");
             branch?.setBranch([branchTitle, branchFileName, Number(branchId)])
             setCurentBranch(branchTitle, branchFileName, Number(branchId))
@@ -149,7 +149,7 @@ const Branch: React.FC = () => {
                     branchOptions.map((option, index) => (
                         <div
                             key={index}
-                            className="option"
+                            className="option glow"
                             onClick={() =>
                                 loadBranch(
                                     branch.branch[0],

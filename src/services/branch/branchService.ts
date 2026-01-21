@@ -14,7 +14,11 @@ export async function getBranches() {
 
         let endpoint = '/get/branches';
 
-        if( localStorage.getItem('firstLaunch') == null ){
+         var completedBranches = getCompletedBranches()?.split(',')
+
+        if(
+            !completedBranches?.includes('How This World Works')
+        ){
             endpoint = '/get/tutorialBranch'
         }
 

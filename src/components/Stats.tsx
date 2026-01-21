@@ -7,6 +7,7 @@ const Stats: React.FC = () => {
     return (
     <div className="stats">
         <div className="container">
+            <center>
             <div className="row">
                 <div className="col">
                     <small> <FontAwesomeIcon style={{ color: "tomato" }} icon={faHeart} /> <b className="health">100</b></small>
@@ -21,6 +22,7 @@ const Stats: React.FC = () => {
                     <small> <FontAwesomeIcon  style={{ color: "gold" }} icon={faCoins} />  <b className="gold">100</b></small>
                 </div>
             </div>
+            </center>
         </div>
     </div>
     );

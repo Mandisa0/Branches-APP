@@ -1,3 +1,26 @@
+@keyframes softGlow {
+  0% {
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.658),
+                0 0 12px rgba(207, 207, 207, 0.363);
+  }
+  50% {
+    box-shadow: 0 0 6px rgba(114, 114, 114, 0.658),
+                0 0 12px rgba(97, 97, 97, 0.363);
+  }
+  100% {
+    box-shadow: 0 0 6px rgba(224, 224, 224, 0.658),
+                0 0 12px rgba(212, 212, 212, 0.363);
+  }
+}
+
+.glow {
+  animation: softGlow 5s ease-in-out infinite;
+}
+
+.btn{
+    border-radius: 0px;
+}
+
 @media only screen and (max-width: 600px) {
 
     body {
@@ -8,7 +31,7 @@
 
     .header {
         width: 90%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 10px;
         padding-top: 15px;
         padding-bottom: 15px;
@@ -21,8 +44,8 @@
     }
 
     .stats {
-        width: 80%;
-        border-radius: 5px;
+        width: 90%;
+        border-radius: 0px;
         padding: 8px;
         padding-top: 15px;
         padding-bottom: 12px;
@@ -37,7 +60,7 @@
 
     .selection {
         width: 50%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 20px;
         padding-top: 15px;
         padding-bottom: 10px;
@@ -51,8 +74,8 @@
     }
 
     .image {
-        width: 60%;
-        border-radius: 5px;
+        width: 90%;
+        border-radius: 0px;
         padding: 10px;
         background-color: #333;
         color: #fff;
@@ -60,7 +83,7 @@
         margin-left: auto;
         margin-right: auto;
         margin-top: 10px;
-        height: 25vh;
+        height: auto
         text-align: center;
         display: flex;
         justify-content: center;
@@ -70,7 +93,7 @@
 
     .image img {
         height: 100%;
-        border-radius: 5px;
+        border-radius: 0px;
         color: #fff;
         position: relative;
         margin-left: auto;
@@ -79,7 +102,7 @@
 
     .text {
         width: 90%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 12px;
         padding-top: 20px;
         padding-bottom: 20px;
@@ -95,7 +118,7 @@
 
     .option {
         width: 85%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 10px;
         padding-top: 15px;
         padding-bottom: 15px;
@@ -122,6 +145,7 @@
     .swal2-popup,
     .swal2-toast,
     .swal2-show {
+        border-radius: 0px !important;
         background-color: #333 !important;
         width: 95% !important;
     }
@@ -130,7 +154,7 @@
         background-color: #333 !important;
         color: #fff;
         margin-top: 65px;
-        border-radius: 5px !important;
+        border-radius: 0px !important;
         width: 90%;
         margin-left: auto;
         margin-right: auto;
@@ -157,7 +181,7 @@
     .menu-item {
         border: 0px solid whitesmoke;
         background-color: #3b3b3b !important;
-        border-radius: 5px !important;
+        border-radius: 0x !important;
         margin-top: 5px !important;
         margin-bottom: 5px !important;
         padding: 10px !important;
@@ -174,7 +198,7 @@
 
     .branch-table {
         width: 70%;
-        border-radius: 5px;
+        border-radius: 0px;
         background-color: #333;
         color: #fff;
         position: relative;
@@ -209,7 +233,7 @@
 
     .branchHistory{
         width: 90%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 5px;
         background-color: #333;
         color: #fff;
@@ -244,7 +268,7 @@
 
     .header {
         width: 50%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 10px;
         padding-top: 15px;
         padding-bottom: 15px;
@@ -257,8 +281,8 @@
     }
 
     .stats {
-        width: 30%;
-        border-radius: 5px;
+        width: 50%;
+        border-radius: 0px;
         padding: 8px;
         padding-top: 15px;
         background-color: #333;
@@ -272,7 +296,7 @@
 
     .selection {
         width: 10%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 8px;
         padding-top: 15px;
         background-color: #333;
@@ -286,7 +310,7 @@
 
     .image {
         width: 30%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 10px;
         background-color: #333;
         color: #fff;
@@ -304,7 +328,7 @@
 
     .image img {
         height: 100%;
-        border-radius: 5px;
+        border-radius: 0px;
         color: #fff;
         position: relative;
         margin-left: auto;
@@ -313,7 +337,7 @@
 
     .text {
         width: 50%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 12px;
         padding-top: 20px;
         padding-bottom: 20px;
@@ -328,8 +352,8 @@
     }
 
     .option {
-        width: 50%;
-        border-radius: 5px;
+        width: 45%;
+        border-radius: 0px;
         padding: 10px;
         padding-top: 15px;
         padding-bottom: 15px;
@@ -356,6 +380,7 @@
     .swal2-popup,
     .swal2-toast,
     .swal2-show {
+        border-radius: 0px !important;
         background-color: #333 !important;
         width: 90% !important;
     }
@@ -364,7 +389,7 @@
         background-color: #333 !important;
         color: #fff;
         margin-top: 20px;
-        border-radius: 5px !important;
+        border-radius: 0px !important;
         width: 80%;
         margin-left: auto;
         margin-right: auto;
@@ -391,7 +416,7 @@
     .menu-item {
         border: 0px solid whitesmoke;
         background-color: #3b3b3b !important;
-        border-radius: 5px !important;
+        border-radius: 0px !important;
         margin-top: 5px !important;
         margin-bottom: 5px !important;
         padding: 10px !important;
@@ -408,7 +433,7 @@
 
     .branch-table {
         width: 50%;
-        border-radius: 5px;
+        border-radius: 0px;
         padding: 12px;
         padding-top: 20px;
         padding-bottom: 20px;

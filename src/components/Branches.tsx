@@ -91,7 +91,7 @@ const Branches: React.FC = () => {
 
                     <div
                         key={index}
-                        className="option"
+                        className="option glow"
                         onClick={() =>
                             loadBranch(branch['title'], branch['file'], branch['description'], 1)
                         }

@@ -67,7 +67,7 @@ const Store: React.FC = () => {
         {loadingAd === true && <small style={{fontSize: "10px"}}>loading please wait...<br></br><br></br></small>}
       </center>
 
-      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "5px" }} className="row">
+      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "0px" }} className="row">
 
         <table style={{ width: "100%", color: "whitesmoke", border: "0px solid white" }}>
           <tbody>
@@ -108,7 +108,7 @@ const Store: React.FC = () => {
 
       <br></br>
 
-      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "5px" }} className="row">
+      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "0px" }} className="row">
         <table style={{ width: "100%", color: "whitesmoke", border: "0px solid white" }}>
           <tbody>
             <tr>
@@ -148,7 +148,7 @@ const Store: React.FC = () => {
 
       <br></br>
 
-      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "5px" }} className="row">
+      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "0px" }} className="row">
         <table style={{ width: "100%", color: "whitesmoke", border: "0px solid white" }}>
           <tbody>
             <tr>
@@ -188,7 +188,7 @@ const Store: React.FC = () => {
 
       <br></br>
 
-      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "5px" }} className="row">
+      <div style={{ padding: "5px", paddingLeft: "10px", border: "1px solid whitesmoke", zoom: "85%", borderRadius: "0px" }} className="row">
         <table style={{ width: "100%", color: "whitesmoke", border: "0px solid white" }}>
           <tbody>
             <tr>
