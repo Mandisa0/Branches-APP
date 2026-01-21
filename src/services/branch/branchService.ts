@@ -14,11 +14,11 @@ export async function getBranches() {
 
         let endpoint = '/get/branches';
 
-         var completedBranches = getCompletedBranches()?.split(',')
+        var completedBranches = getCompletedBranches()?.split(',')
 
-        if(
+        if (
             !completedBranches?.includes('How This World Works')
-        ){
+        ) {
             endpoint = '/get/tutorialBranch'
         }
 
@@ -32,7 +32,7 @@ export async function getBranches() {
         var filteredBranches = filterCompletedBranches(branchesData.branches);
         console.log(filteredBranches)
 
-        if( localStorage.getItem('firstLaunch') == null ){
+        if (localStorage.getItem('firstLaunch') == null) {
             localStorage.setItem('firstLaunch', '1')
         }
 
@@ -127,17 +127,25 @@ function getRandomBranches(branches: Branch[], count: number = 3): Branch[] {
         .slice(0, count);
 }
 
-function filterCompletedBranches(branches: Branch[]): any{
+function filterCompletedBranches(branches: Branch[]): any {
 
     var filteredBranches = [];
-    var completedBranches = getCompletedBranches()?.split(',')
+    var completedBranches = getCompletedBranches()?.split(',');
+    var localHistoryArr: any = [] ;
+    if (localStorage.getItem('history') !== null) {
+        var localHistory = localStorage.getItem('history');
+        localHistoryArr = localHistory?.split('|||');
+    }
 
-    for(let i=0; i<branches.length; i++){
+    for (let i = 0; i < branches.length; i++) {
 
-        if(
-            !completedBranches?.includes(branches[i]['title']) && 
-            (completedBranches?.includes(branches[i]['requirements']) || branches[i]['requirements'] == null)
-        ){
+        if (
+            !completedBranches?.includes(branches[i]['title']) &&
+            (completedBranches?.includes(branches[i]['requirements'])
+            || branches[i]['requirements'] == null
+            || localHistoryArr?.includes(branches[i]['requirements'])
+            )
+        ) {
             filteredBranches.push(branches[i]);
         }
 
